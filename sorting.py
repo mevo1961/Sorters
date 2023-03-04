@@ -40,6 +40,11 @@ class Sorter():
         randomlist = random.sample(range(1, length + 1), length)
         self.data = randomlist
 
+    def switch(self, i, j):
+        self.data[i], self.data[j] = self.data[j], self.data[i]
+        print(f'switching {self.data[i]} and {self.data[j]}')
+        self.visualize.show_data(self.data)
+
     def startSorting(self):
         self.init_data(self.length)
         msg = f'{self.algorithm} is sorting {len(self.data)} items'
@@ -48,7 +53,6 @@ class Sorter():
         # messagebox.showinfo(title=None, message=msg)
         print(msg)
         self.visualize.set_data(self.data)
-        self.visualize.set_olddata(self.data)
         self.visualize.show_data(self.data)
         self.start = time.time()
 
@@ -64,7 +68,7 @@ class Sorter():
         for i in range(len(self.data)):
             for j in range(i+1, len(self.data)):
                 if self.data[i] > self.data[j]:
-                    self.data[i], self.data[j] = self.data[j], self.data[i]
+                    self.switch(i, j)
             self.visualize.show_data(self.data)
         self.endSorting()
         return self.data
@@ -108,7 +112,9 @@ class Sorter():
             while self.data[right] > pivot:
                 right -= 1
             if left <= right:
-                self.data[left], self.data[right] = self.data[right], self.data[left]
+                self.switch(left, right)
+                # slow down quicksort for better visiblity
+                time.sleep(0.01)
                 left += 1
                 right -= 1
         return left
@@ -131,7 +137,6 @@ class Sorter():
             return datalist
         mid = len(datalist) // 2
         left = self._mergeSort(datalist[:mid])
-        self.visualize.show_data(self.data)
         right = self._mergeSort(datalist[mid:])
         self.visualize.show_data(self.data)
         return self._merge(left, right)
@@ -214,13 +219,9 @@ class Visualize():
         self.canvas.create_line(x, y, x+1, y+1, fill=color)
 
     def show_data(self, data):
-        self.set_data(data)
-        # self.canvas.delete('all')
-        for i in range(len(self.olddata)):
-            self.draw_dot(i, self.olddata[i], self.canvas['bg'])
+        self.canvas.delete('all')
         for i in range(len(self.data)):
             self.draw_dot(i, self.data[i], 'red')
-        self.set_olddata(self.data.copy())
         self.canvas.update_idletasks()
     
     def run(self):
