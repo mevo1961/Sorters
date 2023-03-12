@@ -69,6 +69,9 @@ class SorterGUI():
         for i in range(len(data)):
             self.draw_dot(i, data[i], 'red')
         self.canvas.update_idletasks()
+
+    def show_info(self, msg):
+        messagebox.showinfo(title=None, message=msg)
     
     def run(self):
         self.canvas.delete('all')

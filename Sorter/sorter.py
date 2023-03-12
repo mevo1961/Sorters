@@ -24,9 +24,9 @@ class Sorter():
     def startSorting(self):
         self.init_data(self.length)
         msg = f'{__class__.__name__} is sorting {len(self.data)} items'
-        # if len(self.data) <= 100:
-        #     msg += str(self.data)
-        # messagebox.showinfo(title=None, message=msg)
+        if len(self.data) <= 100:
+            msg += str(self.data)
+        self.display.show_info(msg)
         print(msg)
         self.display.show_data(self.data)
         self.start = time.time()
@@ -36,7 +36,7 @@ class Sorter():
         msg = f'{self.algorithm} took {round(self.end - self.start, 3)} seconds to sort {len(self.data)} items'
         if len(self.data) <= 100:
             msg += str(self.data)
-        messagebox.showinfo(title=None, message=msg)
+        self.display.show_info(msg)
 
     def sort():
         # this method must be implemented by the child class
@@ -45,6 +45,7 @@ class Sorter():
 class BubbleSort(Sorter):
     def __init__(self, length, display):
         super().__init__(length, display)
+        self.algorithm = 'Bubble Sort'
 
     def sort(self):
         self.startSorting()
@@ -59,6 +60,7 @@ class BubbleSort(Sorter):
 class SelectionSort(Sorter):
     def __init__(self, length, display):
         super().__init__(length, display)
+        self.algorithm = 'Selection Sort'
 
     def sort(self):
         self.startSorting()
@@ -75,6 +77,7 @@ class SelectionSort(Sorter):
 class InsertionSort(Sorter):
     def __init__(self, length, display):
         super().__init__(length, display)
+        self.algorithm = 'Insertion Sort'
 
     def sort(self):
         self.startSorting()
@@ -90,6 +93,7 @@ class InsertionSort(Sorter):
 class QuickSort(Sorter):
     def __init__(self, length, display):
         super().__init__(length, display)
+        self.algorithm = 'Quick Sort'
 
     def _quickSort(self, left, right):
         if left >= right:
@@ -124,6 +128,7 @@ class QuickSort(Sorter):
 class MergeSort(Sorter):
     def __init__(self, length, display):
         super().__init__(length, display)
+        self.algorithm = 'Merge Sort'
 
     def sort(self):
         self.startSorting()
